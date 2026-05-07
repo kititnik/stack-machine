@@ -3,7 +3,7 @@
 
 #include <stddef.h>
 
-typedef int type;
+typedef float type;
 typedef struct Stack Stack;
 
 typedef enum {
