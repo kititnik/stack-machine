@@ -6,6 +6,8 @@ add_subdirectory(libs/stack)
 
 add_library(vm
     src/vm.c
+    src/parser.c
+    src/executor.c
 )
 
 target_include_directories(vm
@@ -13,4 +15,5 @@ target_include_directories(vm
 )
 
 target_link_libraries(vm
-    PRIVATE stack)
+    PRIVATE stack
+)

@@ -53,7 +53,7 @@ StackStatus print_dump(Stack* stack) {
     fprintf(stderr, "Inverted base: %llu\n", stack->inv_base);
     fprintf(stderr, "Stack:\n");
     for(size_t i = 0; i < stack->size; i++) {
-        fprintf(stderr, "%d\n", stack->data[i]);
+        fprintf(stderr, "%f\n", stack->data[i]);
     }
     return STACK_SUCCESS;
 }
