@@ -13,7 +13,9 @@ struct VM {
     size_t memory_size;
 };
 
-VMStatus get_two_top_vals(VM* vm, float* top_val, float* below_val) {
+static VMStatus get_two_top_vals(VM* vm, float* top_val, float* below_val);
+
+static VMStatus get_two_top_vals(VM* vm, float* top_val, float* below_val) {
     if(vm == NULL) {
         fprintf(stderr, "%s", NULL_VM_POINTER_ERROR);
         return VM_NULL_POINTER;
@@ -170,4 +172,13 @@ VMStatus vm_div(VM* vm) {
         return VM_STACK_ERROR;
     }
     return VM_SUCCESS;
+}
+
+void vm_free(VM* vm) {
+    if(vm == NULL) {
+        return;
+    }
+    clear(vm->stack);
+    vm->stack = NULL;
+    free(vm);
 }

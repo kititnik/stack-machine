@@ -39,7 +39,7 @@ const size_t COMMAND_TABLE_SIZE = sizeof(command_table) / sizeof(command_table[0
 static ParseStatus read_file(const char* file_path, char** out_buffer);
 static ParseStatus split_lines(char* buffer, size_t* out_count, char*** out_lines);
 static ParseStatus parse_command(char* line, Command* out_command);
-static void strip_comment(const char* line);
+static void strip_comment(char* line);
 static ParseStatus parse_args(Command* command, const char* line);
 
 ParseStatus parse(const char* file_path, ParseResult* parse_result) {
@@ -214,7 +214,7 @@ static ParseStatus parse_command(char* line, Command* out_command) {
     return PARSER_SUCCESS;
 }
 
-static void strip_comment(const char* line) {
+static void strip_comment(char* line) {
     char* comment_ptr = strchr(line, ';');
     if (comment_ptr != NULL) {
         *comment_ptr = '\0';
@@ -228,8 +228,10 @@ static ParseStatus parse_args(Command* command, const char* line) {
             fprintf(stderr, COMMAND_STRING_PARSE_ERROR, line, arg+1);
             for(int j = 0; j < arg; j++) {
                 free(command->args[j]);
+                command->args = NULL;
             }
             free(command->args);
+            command->args = NULL;
             return PARSER_COMMAND_STRING_PARSE_ERROR;
         }
         command->args[arg] = strdup(token);
@@ -238,6 +240,7 @@ static ParseStatus parse_args(Command* command, const char* line) {
             fprintf(stderr, COMMAND_STRING_PARSE_ERROR, line, arg+1);
             for(int j = 0; j < arg; j++) {
                 free(command->args[j]);
+                command->args = NULL;
             }
             free(command->args);
             command->args = NULL;

@@ -8,6 +8,14 @@ const char* NULL_ARG_POINTER_ERROR = "Pointer to %s is NULL";
 static ExecutorStatus execute_push(VM* vm, const Command* command);
 
 ExecutorStatus execute(VM* vm, ParseResult* parse_result) {
+    if(vm == NULL) {
+        fprintf(stderr, NULL_ARG_POINTER_ERROR, "vm");
+        return EXECUTOR_NULL_ARG_ERROR;
+    }
+    if(parse_result == NULL) {
+        fprintf(stderr, NULL_ARG_POINTER_ERROR, "parse_result");
+        return EXECUTOR_NULL_ARG_ERROR;
+    }
     for (size_t i = 0; i < parse_result->count; i++) {
         ExecutorStatus status = execute_command(vm, &parse_result->commands[i]);
         if (status != EXECUTOR_SUCCESS) return status;
@@ -18,6 +26,10 @@ ExecutorStatus execute(VM* vm, ParseResult* parse_result) {
 ExecutorStatus execute_command(VM* vm, const Command* command) {
     if(vm == NULL) {
         fprintf(stderr, NULL_ARG_POINTER_ERROR, "vm");
+        return EXECUTOR_NULL_ARG_ERROR;
+    }
+    if(command == NULL) {
+        fprintf(stderr, NULL_ARG_POINTER_ERROR, "command");
         return EXECUTOR_NULL_ARG_ERROR;
     }
     switch (command->type) {

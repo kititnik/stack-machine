@@ -27,4 +27,6 @@ VMStatus vm_mul(VM* vm);
 
 VMStatus vm_div(VM* vm);
 
+void vm_free(VM* vm);
+
 #endif
